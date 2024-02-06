@@ -1,0 +1,17 @@
+
+
+  .product_list {
+      display: flex;
+      justify-content: space-between;
+    }
+    .category, .vendor, .price {
+      flex-basis: 24%;
+      background-color: #f0f0f0;
+      padding: 10px;
+    }
+    .vendor-checkbox {
+      column-count: 2;
+    }
+    .price-range-list {
+      column-count: 2;
+    }

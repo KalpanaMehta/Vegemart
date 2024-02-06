@@ -1,0 +1,236 @@
+{%extends 'partials/base.html' %}
+{% load static %}
+{% block content%}
+
+<body>
+    <div class="main">
+            
+        <div class="button-container">
+            <button class="button-68" onclick="showContent('profile-part')">Profile</button>
+            <button class="active button-68" onclick="showContent('content1')">Dashboard</button>
+            <button class="button-68" onclick="showContent('content2')">Orders</button>
+            <button class="button-68" onclick="showContent('content3')">Track your Order</button>
+            <button class="button-68" onclick="showContent('content4')">My Address</button>
+            <a class="button-68" href="{% url 'userauthentication:sign-out' %}">Log out</a>
+        </div>
+        <div class="content-wrapper">
+            <div class="content-container">
+                
+
+                <div id="content1" class="hidden">
+                    <h2>Hello "{{request.user|title}}" !</h2>
+                    <p>"We're glad to have you here. Feel free to manage your account and access useful resources."</p>
+                </div>
+                <div id="content2" class="hidden">
+                    <h2>Your Orders</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Paid Status</th>
+                                <th>Total</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for o in orders %}
+                            <!-- Placeholder data for demonstration -->
+                            <tr>
+                                <td>INVOICE_NO-{{o.id}}</td>
+                                <td>{{o.order_date}}</td>
+                                <td>{{o.product_status}}</td>
+                                {% if o.paid_status == True %}
+                                <td>
+                                    <i class="fa fa-check" style="color: #33d82e"></i>
+                                </td>
+                                {% else %}
+                                <td>
+                                    <i class="fa fa-remove " style="color: #cf0707;"></i>
+                                </td>
+                                {% endif %}
+                                <td>{{o.price}}</td>
+                                <td>
+                                    <a href="{% url 'core:order-detail' o.id %}"> view</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="content3" class="hidden">
+                    <h2>Content 3</h2>
+                    <p>This is the content for Button 3.</p>
+                </div>
+                <div id="content4" class="hidden">
+                    <h1>Address</h1>
+                    <div>
+                        <form class="mb-4" method="POST">
+                            {% csrf_token %}
+                            <div class="card-header">
+                                <h5>Add Address</h5>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <input type="text" placeholder="Address" required="" class="form-control"
+                                        name="address" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input placeholder="Phone" required="" class="form-control" name="mobile" />
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" name="submit" class="btn btn-success"
+                                        style="margin-top: 10px;">Save Address</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        {% for a in address %}
+                        <div class="col">
+
+                            <div class="card mb-3 mb-lg">
+                                <div class="card-header">
+
+                                    <h4> Address {{forloop.counter}}</h4>
+
+                                </div>
+
+
+                                <div class="card-body border rounded">
+                                    <address>
+                                        <p>{{a.address}}</p>
+                                        <p>{{a.phone_number}}</p>
+                                    </address>
+                                    {% if a.status %}
+                                    <i data-address-id="{{ a.id }}" class="fa fa-check-circle check check{{a.id}}"
+                                        style="font-size:18px;color:rgb(25, 109, 25);"></i>
+                                    <button data-address-id="{{ a.id }}" style="display:none"
+                                        class="btn btn-success make-default-address button{{a.id}} action_btn">Make
+                                        Default</button>
+
+                                    {% else %}
+                                    <i data-address-id="{{ a.id }}" class="fa fa-check-circle check check{{a.id}}"
+                                        style="display:none;font-size:18px;color:rgb(25, 109, 25);"></i>
+                                    <button data-address-id="{{ a.id }}"
+                                        class="btn btn-success make-default-address button{{a.id}} action_btn">Make
+                                        Default</button>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                </div>
+                <div id="profile-part" class="hidden" style="width:600px">
+                    <div class="card">
+                        <div class="card-header border-bottom">
+                            <h2>My Profile</h2>
+
+                        </div>
+                        <div class="row">
+                            <div class="col md-4">
+                                {% if profile.image %}
+                                <img style="height:200px; width:200px;padding: 10px 0px;" src="{{profile.image.url}}"
+                                    alt="">
+                                {% else %}
+                                <img style="height: 200px; width: 200px; padding: 10px 0px;"
+                                    src="/static/assets/images/download1.png" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="col md-6">
+                                <div class="card-body">
+                                    <h5 class="card-title">Name: {{profile.full_name}}</h5>
+
+                                    <p class="card-text">Bio: {{profile.bio}}</p>
+                                    <p class="card-text">Phone Number: {{profile.phone}}</p>
+                                    {% if profile.verified == True %}
+                                    <span>Verifed<i class="fa fa-check-circle"></i></span>
+                                    {% endif %}
+                                </div>
+                                <a href="{% url 'userauthentication:profile-update' %}" class=' btn-success mb-3'>Edit
+                                    Profile</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showContent(contentId) {
+            // Hide all content sections
+            const allContents = document.querySelectorAll('.content-container > div');
+            allContents.forEach((content) => {
+                content.classList.add('hidden');
+            });
+
+            // Show the selected content section
+            const selectedContent = document.getElementById(contentId);
+            selectedContent.classList.remove('hidden');
+
+            // Remove 'active' class from all buttons
+            const allButtons = document.querySelectorAll('.button-container button');
+            allButtons.forEach((button) => {
+                button.classList.remove('active');
+            });
+
+            // Add 'active' class to the clicked button
+            const clickedButton = document.querySelector(`.button-container button[onclick="showContent('${contentId}')"]`);
+            clickedButton.classList.add('active');
+        }
+
+        // Show the first content section by default
+        showContent('content1');
+
+    </script>
+    <script>
+        // making default address
+        $(document).on("click", ".make-default-address", function () {
+            let id = $(this).attr("data-address-id");
+            let this_val = $(this);
+            console.log("ID is :", id);
+            console.log("Element is :", this_val);
+
+            $.ajax({
+                url: "/make-default-address",
+                data: {
+                    "id": id,
+
+                },
+                dataType: 'json',
+                success: function (response) {
+                    console.log("address page default");
+                    if (response.boolean == true) {
+                        $(".check").hide()
+                        $(".action_btn").show()
+
+                        $(".check" + id).show()
+                        $(".button" + id).hide()
+                    }
+                }
+            })
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+
+
+    {% endblock content%}

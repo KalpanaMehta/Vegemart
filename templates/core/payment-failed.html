@@ -1,0 +1,30 @@
+{%extends 'partials/base.html' %}
+{% load static %}
+{% block content%}
+
+<div class="container text-center" style="height:600px;margin-top:200px">
+    <div >
+      <div class="">
+     
+        <form>
+                  
+            <div>
+              <i class="warning icon"></i>
+              <div class="content">
+                <div class="header">
+                  Oops! Something went wrong.
+                </div>
+                
+                <p>While trying to reserve money from your account</p>
+              </div>
+              
+           </div>
+        
+        <a class="btn btn-primary my-4 mx-3" style =" height:40px; width:130px;" href="{% url 'core:index' %}" role="button">Back</a>
+                   
+        </form>
+      </div>
+    </div>
+  </div>
+  
+{% endblock content%}

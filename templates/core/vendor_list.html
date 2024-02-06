@@ -1,0 +1,37 @@
+{%extends 'partials/base.html' %}
+{% load static %}
+{% block content%}
+
+<div class="container">
+    <h1 class="mt-4 mb-4">Vendor List</h1>
+    <span class="text-brand">{{ vendors.count }} vendor{{ vendors.count|pluralize }}</span>
+
+    <div class="row">
+        
+        {% for v in vendors %}
+        <div class="col-md-6">
+            
+            <div class="card mb-3">
+                <div class="card-body">
+                    <img src="{{v.image.url}}" class="img-fluid" style="height: 100px; width: 200px;" alt="Vendor Image">
+                    <p class="card-text">{{ v.vendor.all.count }} Products</p>
+                    <p class="card-text">Since{{v.date|date:"Y"}} </p>
+
+                    <h5 class="card-title">{{ v.title }}</h5>
+                    <p class="card-text">{{ v.description }}</p>
+                    
+                    <h5>Contact Information</h5>
+                    <p>
+                      Email: vendor2@example.com<br>
+                      Phone: {{v.contact}}<br>
+                      Address: {{v.address}}
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content%}

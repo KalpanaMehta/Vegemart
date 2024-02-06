@@ -1,0 +1,93 @@
+{%extends 'partials/base.html' %}
+{% load static %}
+{% block content%}
+
+
+<div class="hero-wrap hero-bread" style="background-image: url('/static/assets/images/bg_1.jpg');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Wishlist</span></p>
+                <h1 class="mb-0 bread">My Wishlist</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="ftco-section ftco-cart " id="wishlist-list">
+    <div class="container">
+        <p>There are {{wishlist.count}} products</p>
+        <div class="row">
+            <div class="col-md-12 ftco-animate">
+                <div class="cart-list">
+                    <table class="table">
+                        <thead class="thead-primary">
+                            <tr class="text-center">
+                                <th>&nbsp;</th>
+                                <th>Product List</th>
+                                <th>&nbsp;</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in w %}
+                            <tr class="text-center">
+                                <td class="product-remove"><button style="border:none;background:none;font-size:18px" data-wishlist-product="{{item.id}}" class="delete-wishlist-product"><span class="fa fa-trash"></span></button></td>
+
+                                <td class="image-prod">
+                                    <div class="img" style="background-image: url('{{ item.product.image.url }}');"></div>
+                               
+                                </td>
+
+                                <td class="product-name">
+                                    <h3>{{item.product.title}}</h3>
+                                    <p>Far far away, behind the word mountains, far from the countries</p>
+                                </td>
+                                
+                                <td class="price">
+                                  
+                                    <span>₹</span><span class="price-sale current-product-price-{{p.id}}">{{item.product.price}}
+                                   
+                                </td>
+                                <td class="text-right">
+                                    {% if item.product.stock_count %}
+                                        In Stock
+                                    {% else %}
+                                    Out of stock
+                                    {% endif %}
+                                </td>
+
+                                <td class="add-to-cart">
+                                    <div class="input-group mb-3">
+                                        <input type="hidden" value="1"  id="product-quantity" class= " product-quantity-{{item.product.id}}">
+                                        <input type="hidden" value="{{p.P_ID}}" class="product-pid-{{item.product.id}}" >
+                                        <input type="hidden" value="{{p.image.url}}" class="product-image-{{item.product.id}}">
+                                        <input type="hidden" value="{{p.id}}" class=" product-id-{{item.product.id}}" >
+                                        <input type="hidden" value="{{p.title}}" class="product-title-{{item.product.id}}" >
+                                        
+                                        <button  class="add-to-cart-btn "style="height:30px; width:30px;color:white;background-color:white" data-index="{{item.product.id}}" >
+                                            <span><i class="ion-ios-cart"></i></span>
+                                       </button>
+                                    </div>
+                                </td>
+
+
+                                {% empty %}
+                            <tr>
+                                <td>
+                                    <p>Nothing in the wishlist!</p>
+                                </td>
+                            </tr>
+                            </tr><!-- END TR-->
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content%}

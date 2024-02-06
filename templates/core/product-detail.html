@@ -1,0 +1,231 @@
+{%extends 'partials/base.html' %}
+{% load static %}
+{% block content%}
+
+<div class="hero-wrap hero-bread" style="background-image: url('/static/assets/images/bg_1.jpg');">
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Products</span></p>
+          <h1 class="mb-0 bread">Product Detail</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <section class="ftco-section">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-6 mb-5 ftco-animate">
+                  <a href="images/product-1.jpg" class="image-popup"><img src="{{p.image.url}}" class="img-fluid" alt="Colorlib Template"></a>
+               
+                </div>
+              <div class="col-lg-6 product-details pl-md-5 ftco-animate">
+                  <h3>{{p.title}}</h3>
+                  <div class="rating d-flex">
+                          <p class="text-left mr-4">
+                              <a href="#" class="mr-2">5.0</a>
+                              <a href="#"><span class="ion-ios-star-outline"></span></a>
+                              <a href="#"><span class="ion-ios-star-outline"></span></a>
+                              <a href="#"><span class="ion-ios-star-outline"></span></a>
+                              <a href="#"><span class="ion-ios-star-outline"></span></a>
+                              <a href="#"><span class="ion-ios-star-outline"></span></a>
+                          </p>
+                          <p class="text-left mr-4">
+                              <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
+                          </p>
+                          <p class="text-left">
+                              <a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
+                          </p>
+                      </div>
+                      <div class="pricing" >
+                        <p class="price"><span>₹</span><span class="price-sale current-product-price-{{p.id}}">{{p.price}}</span></p>
+                      </div>
+                  <p>{{p.description|truncatechars:30}}</p>
+                      <div class="row mt-4">
+                          <div class="col-md-6">
+                              <div class="form-group d-flex">
+                    <div class="select-wrap">
+                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                    <select name="" id="" class="form-control">
+                        <option value="">Small</option>
+                      <option value="">Medium</option>
+                      <option value="">Large</option>
+                      <option value="">Extra Large</option>
+                    </select>
+                  </div>
+                  </div>
+                   </div>
+                          <div class="w-100">
+                            <input type="number" value="1" id="product-quantity" class="w-25 my-3 product-quantity-{{p.id}}"  >
+                          </div>
+                         <div class="w-100">
+                          
+                          <input type="hidden" value="{{p.P_ID}}" class="product-pid-{{p.id}}" >
+                          <input type="hidden" value="{{p.image.url}}" class="product-image-{{p.id}}">
+                          <input type="hidden" value="{{p.id}}" class=" product-id-{{p.id}}" >
+                          <input type="hidden" value="{{p.title}}" class="product-title-{{p.id}}" >
+                          
+                          <p><button type="submit" class="btn btn-black add-to-cart-btn"   data-index="{{p.id}}"  style="color:#28a745;outline:#28a745">Add to Cart</button></p>
+                          <a aria-label="Add to Wishlist" class="action btn-green hover-up " href="" style="font-size:30px">
+                             <span><i class="ion-ios-heart" ></i></span>
+                          </a>
+                        </div>
+                      
+                  </div>
+                  <div class = "product-extra-link2">
+                    
+                    </div>
+                    <div class="col-md-12">
+                      <p style="color: #000;">{{p.stock_count}} Available</p>
+                  </div>
+                  <div class="col-md-12">
+                      <p style="color: #000;">Manufactured: {{p.mfd}} </p>
+                  </div>
+                    </div>
+                    
+                </div>
+      </div>
+  </section>
+  {% comment %} ********************** decription ***************** {% endcomment %}
+  
+  <section class="ftco-section">
+      <div class="container">
+              <div class="row justify-content-center mb-3 pb-3">
+        <div class="col-md-12 heading-section text-center ftco-animate">
+            <span class="subheading">Products</span>
+          <h2 class="mb-4">Related Products</h2>
+          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+        </div>
+      </div>   		
+      </div>
+      <div class="container">
+          <div class="row">
+            {% for p in products %}
+              <div class="col-md-6 col-lg-3 ftco-animate">
+                  <div class="product">
+                      <a href="{% url 'core:product-detail' p.P_ID %}" class="img-prod"><img class="img-fluid" src="{{p.image.url}}" alt="Colorlib Template">
+                          <span class="status">{{p.get_discount}}</span>
+                          <div class="overlay"></div>
+                      </a>
+                      <div class="text py-3 pb-4 px-3 text-center">
+                          <h3><a href="{% url 'core:product-detail' p.P_ID %}">{{p.title|truncatechars:20}}</a></h3>
+                          <div class="d-flex">
+                            <div class="pricing" >
+                              <p class="price"><span class="mr-2 price-dc">₹{{p.old_price}}</span><span>₹</span><span class="price-sale current-product-price-{{p.id}}">{{p.price}}</span></p>
+                            </div>
+                          </div>
+                          <div class="bottom-area d-flex px-3">
+                              <div class="m-auto d-flex">
+                                  <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                      <span><i class="ion-ios-menu"></i></span>
+                                  </a>
+                                  <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                      <span><i class="ion-ios-cart"></i></span>
+                                  </a>
+                                  <a href="#" class="heart d-flex justify-content-center align-items-center ">
+                                      <span><i class="ion-ios-heart"></i></span>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              {% endfor %}
+          </div>
+      </div>
+  </section>
+
+  <section ftco-section" style="overflow-x:hidden; padding:20px;margin:0px 50px">
+    <div class="container row mt-4">
+        <div class="col-md-12">
+          <h4>Product Reviews <span>{{reviews.count}}</span></h4>
+          <hr>
+        </div>
+       </div>
+       <div class="detail_5 row">
+        <div class="col-md-6">
+          <div class="detail_5l">
+            <h6 class="mb-4">{{reviews.count}} review for Latest Pocket Product</h6>
+            {% for r in reviews %}
+            <div class="detail_5li row "  style="margin-bottom: 20px;"">
+             <div class="col-md-2 col-sm-2">
+              <div class="detail_5lil">
+                <img src="{% static '/assets/images/userphoto.jpg' %}" alt="abc" style ="height:60px; width:40px" class="rounded-circle w-100">
+            </div>
+             </div>
+             <div class="col-md-10 col-sm-10">
+              <div class="detail_5lir">
+               <h6 class="font_14">{{r.user.username|title}} <span class="col_light font_12 ms-2">- {{r.date|date:"d M,Y"}}</span>
+                {% for r in rating %}
+                    <span class="col_yell font_12 float-end">
+                            <i class="fa fa-star"></i>
+                    </span>
+                {% endfor %}
+
+                   
+                
+               
+               </h6>
+               <p class="mb-0">{{r.review}}</p>
+              </div>
+             </div>
+            </div>
+            {% endfor %}
+            
+          </div>
+    
+        </div>
+        <div class="col-md-6">
+          <!-- <div class="detail_5r">
+            
+            <p>Your email address will not be published. Required fields are marked *</p>
+            <h6 class="mb-2">YOUR RATING</h6>
+            <span class="col_yell fs-6">
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  </span> -->
+                <form action="{% url 'core:ajax-add-review' p.id %}" method="POST" id="review-form">
+                    {% csrf_token %}
+                <h6 class="font_13 mt-4 mb-3">YOUR REVIEW *</h6>
+                 
+                 <div class="form-group">
+                   {{review_form.review}}
+                 </div>
+                 <div class="form-group">
+                  {{review_form.rating}}
+                </div>
+                <h6 class="mb-0 mt-4"><button type="submit" class="button btn btn-success" >SUBMIT</button></h6>
+              </form>
+            <!-- </div> -->
+        </div>
+       </div>
+  </section>
+
+  {% comment %} ########################################################################## {% endcomment %}
+  
+  <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+    <div class="container py-4 ">
+      <div class="row d-flex justify-content-center py-5">
+        <div class="col-md-6">
+            <h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
+            <span>Get e-mail updates about our latest shops and special offers</span>
+        </div>
+        <div class="col-md-6 d-flex align-items-center">
+          <form action="#" class="subscribe-form">
+            <div class="form-group d-flex">
+              <input type="text" class="form-control" placeholder="Enter email address">
+              <input type="submit" value="Subscribe" class="submit px-3">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+{% endblock content%}

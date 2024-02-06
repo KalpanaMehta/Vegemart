@@ -1,0 +1,125 @@
+{% comment %} {%extends 'partials/base.html' %}
+{% load static %}
+{% block content%}
+
+<body>
+    <div class="main">
+    <div class="button-container">
+        <button class="button-68 active" onclick="showContent('content0')">Profile</button>
+         <a class="button-68" href='{% url 'userauthentication:sign-out' %}'>Log out</a>
+    </div>
+    <div class="content-wrapper">
+     {% if form.errors %}   
+    <div class="alert-danger alert border">
+        <strong>{{form.errors}}</strong>
+    </div>
+    {% endif %}
+        <div class="content-container">
+            <div id="content-update" class="hidden" style="width:600px">
+                <div class="card" >
+                   <div class="card-header border-bottom">
+                        <h2>Update Profile</h2>
+
+                    </div>
+                    <div class="row">
+                        <div class="col md-4">
+                            {% if profile_photo.image %}
+                            <img style= "height:200px; width:200px;padding: 10px 0px;" src="{{profile_photo.image.url}}" alt="">
+                            {% else %}
+                            <img style="height: 200px; width: 200px; padding: 10px 0px;" src="/static/assets/images/download1.png" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="col md-6">
+                            <div class="card-body">
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        {{form.full_name}}
+                                    </div>
+                                    <div class="mb-3">
+                                        {{form.email}}
+                                    </div>
+                                    <div class="mb-3">
+                                        {{form.bio}}
+                                    </div>
+                                    <div class="mb-3">
+                                        {{form.phone}}
+                                    </div>
+                                    <div class="mb-3">
+                                        {{form.image}}
+                                    </div>
+                                    <button type="submit" class=' btn-success mb-3'>Save Changes</button>
+                        
+                                </form>
+                              </div></div>
+                    </div>
+
+                    
+                  </div>
+
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+    <script>
+        function showContent(contentId) {
+            // Hide all content sections
+            const allContents = document.querySelectorAll('.content-container > div');
+            allContents.forEach((content) => {
+                content.classList.add('hidden');
+            });
+
+            // Show the selected content section
+            const selectedContent = document.getElementById(contentId);
+            selectedContent.classList.remove('hidden');
+
+            // Remove 'active' class from all buttons
+            const allButtons = document.querySelectorAll('.button-container button');
+            allButtons.forEach((button) => {
+                button.classList.remove('active');
+            });
+
+            // Add 'active' class to the clicked button
+            const clickedButton = document.querySelector(`.button-container button[onclick="showContent('${contentId}')"]`);
+            clickedButton.classList.add('active');
+        }
+
+        // Show the first content section by default
+        showContent('content-update');
+
+    </script>
+    <script>
+            // making default address
+    $(document).on("click", ".make-default-address", function(){
+        let id = $(this).attr("data-address-id");
+        let this_val = $(this);
+        console.log("ID is :", id);
+        console.log("Element is :", this_val);
+
+        $.ajax({
+            url: "/make-default-address",
+            data:{
+                "id":id,
+    
+            },
+            dataType:'json',
+            success:function(response){
+                console.log("address page default");
+                if(response.boolean==true){
+                    $(".check").hide()
+                    $(".action_btn").show()
+
+                    $(".check" + id).show()
+                    $(".button" + id).hide()
+                }
+            }
+        })
+    });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+
+{% endblock content%} {% endcomment %}
