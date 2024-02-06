@@ -1,4 +1,4 @@
-# Vegemart E-commerce Website
+# Vegemart 
 
 Vegemart is an e-commerce platform built with the Django framework. It's designed to provide a seamless online shopping experience.
 
